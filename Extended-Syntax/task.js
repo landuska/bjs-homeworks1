@@ -1,19 +1,33 @@
-
+"use strict";
 
 function calculateQuadraticEquation(){
-    let a = +window.a.value;
-    let b = +window.b.value;
-    let c = +window.c.value;
-    let result = getResult(a,b,c);
-    window.equation.textContent = `${a}*x^2 + (${b})*x + (${c}) = 0`;
-    let span = window.result;
-    span.textContent = "х = "+result;
-}
+  let a = +window.a.value;
+  let b = +window.b.value;
+  let c = +window.c.value;
+  let result = getResult(a,b,c);
+  window.equation.textContent = `${a}*x^2 + (${b})*x + (${c}) = 0`;
+  let span = window.result;
+  span.textContent = "х = "+ result;
+};
 
 function getResult(a,b,c){
-    // код для задачи №1 писать здесь
-    //return x;
-}
+  let x;
+  let d = b ^ 2 - 4 * a * c;
+      
+  if (d < 0){
+    console.log('Корней нет');
+  } else if (d === 0){
+    x = (-b) / (2 * a);
+    console.log(x);
+    return x;
+  } else {
+    let x = [];  
+    x[1] = (-b + Math.sqrt(d)) / (2 * a); 
+    x[2] = (-b - Math.sqrt(d))/ (2 * a);
+    console.log(x[1] + ' ' + x[2]);
+    return x[i];
+  };
+};
 
 function calculateDrinkTask(){
     let name = window.personName.value;
