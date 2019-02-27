@@ -30,26 +30,37 @@ function getResult(a,b,c){
 };
 
 function calculateDrinkTask(){
-    let name = window.personName.value;
-    let dateOfBirthday = new Date(window.dateOfBirthday.value);
-    let drink = askDrink(name, dateOfBirthday);
-    window.drink.textContent = drink;
+  let name = window.personName.value;
+  let dateOfBirthday = new Date(window.dateOfBirthday.value);
+  let drink = askDrink(name, dateOfBirthday);
+  window.drink.textContent = drink;
 };
 
 function askDrink(name,dateOfBirthday){
-    let age = new Date().getFullYear();
-    result = (age > = 18) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
-    console.log(result);
-    return result;
+  let age = new Date().getFullYear();
+  result = (age > = 18) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
+  console.log(result);
+  return result;
 };
 
 function calculateAverageRating(){
-    let marks = window.marks.value.split("").map(Number);
-    let averageMark = getAverageMark(marks);
-    window.averageMark.textContent = averageMark;
-}
+  let marks = window.marks.value.split("").map(Number);
+  let averageMark = getAverageMark(marks);
+  window.averageMark.textContent = averageMark;
+};
 
 function getAverageMark(marks){
-    // код для задачи №3 писать здесь
-    //return averageMark;
-}
+  let marks = [];
+  // сумма всех оценок
+  let sum = 0; 
+
+  for (let i = 0; i < 5; i ++) {
+    marks.push(i);
+    // сложение всех имеющихся оценок
+    sum = sum + marks[i];  
+    averageMark = sum / marks.length;
+  } else {
+    console.log("Больше 5 оценок");
+  }
+  return averageMark;
+};
