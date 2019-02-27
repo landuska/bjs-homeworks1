@@ -7,7 +7,7 @@ function calculateQuadraticEquation(){
   let result = getResult(a,b,c);
   window.equation.textContent = `${a}*x^2 + (${b})*x + (${c}) = 0`;
   let span = window.result;
-  span.textContent = "х = "+ result;
+  span.textContent = "х = " + result;
 };
 
 function getResult(a,b,c){
@@ -34,13 +34,14 @@ function calculateDrinkTask(){
     let dateOfBirthday = new Date(window.dateOfBirthday.value);
     let drink = askDrink(name, dateOfBirthday);
     window.drink.textContent = drink;
-}
+};
 
 function askDrink(name,dateOfBirthday){
-    // код для задачи №2 писать здесь
-    //console.log(result)
-    //return result;
-}
+    let age = new Date().getFullYear();
+    result = (age > = 18) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
+    console.log(result);
+    return result;
+};
 
 function calculateAverageRating(){
     let marks = window.marks.value.split("").map(Number);
