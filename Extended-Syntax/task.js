@@ -12,7 +12,7 @@ function calculateQuadraticEquation(){
 
 function getResult(a,b,c){
   let x;
-  let d = b ^ 2 - 4 * a * c;
+  let d = Math.pow(b, 2) - 4 * a * c;
       
   if (d < 0){
     console.log('Корней нет');
@@ -21,11 +21,11 @@ function getResult(a,b,c){
     console.log(x);
     return x;
   } else {
-    let x = [];  
-    x[1] = (-b + Math.sqrt(d)) / (2 * a); 
-    x[2] = (-b - Math.sqrt(d))/ (2 * a);
-    console.log(x[1] + ' ' + x[2]);
-    return x[i];
+    let x1, x2;  
+    x1 = (-b + Math.sqrt(d)) / (2 * a); 
+    x2 = (-b - Math.sqrt(d)) / (2 * a);
+    console.log('Первый корень' + x1 + ' Второй корень' + x2);
+    return [x1, x2];
   };
 };
 
@@ -36,9 +36,10 @@ function calculateDrinkTask(){
   window.drink.textContent = drink;
 };
 
-function askDrink(name,dateOfBirthday){
-  let age = new Date().getFullYear();
-  result = (age > = 18) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
+function askDrink(name, dateOfBirthday){
+  let fullDate = new Date(dateOfBirthday);
+  let yearOfBirth = fullDate.getFullYear();
+  let result = (yearOfBirth <= 2001) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
   console.log(result);
   return result;
 };
@@ -50,17 +51,26 @@ function calculateAverageRating(){
 };
 
 function getAverageMark(marks){
-  let marks = [];
-  // сумма всех оценок
-  let sum = 0; 
+  let marksArray = [];
+  let sum = 0;
+  let averageMark = 0;
 
-  for (let i = 0; i < 5; i ++) {
-    marks.push(i);
-    // сложение всех имеющихся оценок
-    sum = sum + marks[i];  
-    averageMark = sum / marks.length;
-  } else {
-    console.log("Больше 5 оценок");
-  }
+    for (let i = 0; i < arguments.length; i ++){
+    // создаем массив из аргументов функции
+      marksArray[i] = arguments[i];
+    
+    // задаем условие для вычисление среднего балла из 5 оценок
+    if (marksArray.length <= 5){
+    // вычисляем сумму из всех оценок
+    sum = sum + marksArray[i];  
+    // вычисляем средний балл
+    averageMark = sum / marksArray.length;
+    }else{
+    console.log('Количество оценок больше 5');
+    // удаляем лишние элементы из массива
+    marksArray.pop();
+    };
+  }; 
+
   return averageMark;
 };
