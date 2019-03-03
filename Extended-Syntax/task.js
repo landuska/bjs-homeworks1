@@ -50,26 +50,26 @@ function calculateAverageRating(){
 };
 
 function getAverageMark(marks){
-  let marksArray = [];
   let sum = 0;
   let averageMark = 0;
 
-    for (let i = 0; i < arguments.length; i ++){
-    // создаем массив из аргументов функции
-      marksArray[i] = arguments[i];
-    
-    // задаем условие для вычисление среднего балла из 5 оценок
-    if (marksArray.length <= 5){
+  // задаем условие для вычисление среднего балла из 5 оценок
+  if (marks.length < 5){
+    for (let i = 0; i < marks.length; i ++){
     // вычисляем сумму из всех оценок
-    sum = sum + marksArray[i];  
-    // вычисляем средний балл
-    averageMark = sum / marksArray.length;
-    }else{
+    sum = sum + marks[i];  
+    };
+  }else{
     console.log('Количество оценок больше 5');
     // удаляем лишние элементы из массива
-    marksArray.pop();
+    marks.splice(5);
+
+    for (let i = 0; i < marks.length; i ++){
+    // вычисляем сумму из всех оценок
+    sum = sum + marks[i];  
     };
   }; 
-
+  // вычисляем средний балл
+  averageMark = sum / marks.length;
   return averageMark;
 };
