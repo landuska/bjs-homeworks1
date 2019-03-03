@@ -37,9 +37,8 @@ function calculateDrinkTask(){
 };
 
 function askDrink(name, dateOfBirthday){
-  let fullDate = new Date(dateOfBirthday);
-  let yearOfBirth = fullDate.getFullYear();
-  let result = (yearOfBirth <= 2001) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
+  let yearOfBirth = dateOfBirthday.getFullYear();
+  let result = ((new Date().getFullYear() - yearOfBirth) >= 18) ? `Не желаете ли олд-фэшн, ${name}?` : `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
   console.log(result);
   return result;
 };
