@@ -54,21 +54,16 @@ function getAverageMark(marks){
   let averageMark = 0;
 
   // задаем условие для вычисление среднего балла из 5 оценок
-  if (marks.length < 5){
-    for (let i = 0; i < marks.length; i ++){
-    // вычисляем сумму из всех оценок
-    sum = sum + marks[i];  
-    };
-  }else{
+  if (marks.length > 5){
     console.log('Количество оценок больше 5');
     // удаляем лишние элементы из массива
     marks.splice(5);
+  };
 
-    for (let i = 0; i < marks.length; i ++){
-    // вычисляем сумму из всех оценок
-    sum = sum + marks[i];  
-    };
-  }; 
+  for (let i = 0; i < marks.length; i ++){
+  // вычисляем сумму из всех оценок
+  sum = sum + marks[i];  
+  };
   // вычисляем средний балл
   averageMark = sum / marks.length;
   return averageMark;
