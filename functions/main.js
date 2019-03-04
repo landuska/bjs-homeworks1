@@ -37,3 +37,29 @@ function showSolutionsMessage(a, b, c){
     console.log(`Уравнение имеет два корня: X₁ = ${x1}, X₂ = ${x2}\n`)
   };
 };
+
+
+function getPersonData(secretData){
+  let firstName, lastName;
+  
+  secretData = {
+  firstName: firstName,
+  lastName: lastName,
+  };
+  
+  if (firstName !== 0){
+    secretData.firstName = 'Эмильо';
+    
+  } else {
+    secretData.firstName = 'Родриго';
+  };
+  
+  if (lastName !== 0){
+    secretData.lastName = 'Эмильо';
+    
+  } else {
+    secretData.lastName = 'Родриго';
+  };
+  
+  return (secretData);
+  };
