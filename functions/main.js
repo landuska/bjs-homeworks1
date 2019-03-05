@@ -22,7 +22,6 @@ function getSolutions(a, b, c){
   return result;
 };
 
-
 function showSolutionsMessage(a, b, c){
   let result = getSolutions(a, b, c);
  
@@ -42,26 +41,23 @@ function showSolutionsMessage(a, b, c){
 
 
 function getPersonData(secretData){
-  let firstPirateName, lastPirateName;
+  let aaa, bbb;
+  secretData = new Object;
   
-  secretData = {
-  firstName: firstPirateName,
-  lastName: lastPirateName,
-  };
+    function truName(prop){
+      
+      if (secretData[prop] == 0){
+        secretData[prop] = 'Родриго';
+      } else {
+        secretData[prop] = 'Эмильо';
+      };
+      
+      return secretData[prop];
+    };
   
-  if (firstPirateName !== 0){
-    secretData.firstName = 'Эмильо';
-    
-  } else {
-    secretData.firstName = 'Родриго';
-  };
+    secretData.aaa = truName(aaa);
+    secretData.bbb = truName(bbb);
   
-  if (lastPirateName !== 0){
-    secretData.lastName = 'Эмильо';
-    
-  } else {
-    secretData.lastName = 'Родриго';
-  };
-  
-  return (secretData);
+    console.log(`firstName: ${secretData.aaa}, lastName: ${secretData.bbb}`);
+    return;
   };
