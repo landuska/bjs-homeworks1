@@ -41,23 +41,23 @@ function showSolutionsMessage(a, b, c){
 
 
 function getPersonData(secretData){
-  let aaa, bbb;
-  secretData = new Object;
+
+  function truName(propValue){
   
-    function truName(prop){
-      
-      if (secretData[prop] == 0){
-        secretData[prop] = 'Родриго';
-      } else {
-        secretData[prop] = 'Эмильо';
-      };
-      
-      return secretData[prop];
+    if (propValue === 1){
+      propValue = 'Родриго';
+    } else {
+      propValue = 'Эмильо';
     };
-  
-    secretData.aaa = truName(aaa);
-    secretData.bbb = truName(bbb);
-  
-    console.log(`firstName: ${secretData.aaa}, lastName: ${secretData.bbb}`);
-    return;
+  return (propValue);
   };
+
+  let firstName = truName(secretData.aaa), lastName = truName(secretData.bbb);
+  
+  let result = {
+    firstName: firstName,
+    lastName: lastName
+  };
+  
+  return(console.log(result));
+};
