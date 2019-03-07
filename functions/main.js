@@ -43,13 +43,7 @@ function showSolutionsMessage(a, b, c){
 function getPersonData(secretData){
 
   function truName(propValue){
-  
-    if (propValue === 0){
-      propValue = 'Родриго';
-    } else {
-      propValue = 'Эмильо';
-    };
-  return (propValue);
+      return (propValue === 0) ? 'Родриго' : 'Эмильо';
   };
 
   let firstName = truName(secretData.aaa), lastName = truName(secretData.bbb);
@@ -82,10 +76,10 @@ function getAverageScore(data){
   //вычисляем средний балл для каждого предмета и записываем его в новый объект
     result[prop] = averageValue(data[prop]);
    //суммируем среднее значение всех предметов  
-    allMarksSum = allMarksSum + result[prop];  
+    allMarksSum += result[prop];  
     i ++;
   };  
 //пушим средний балл за ВСЕ предметы в объект
-  result.average = allMarksSum;
+  result.average = allMarksSum / i;
   return result;
   };
