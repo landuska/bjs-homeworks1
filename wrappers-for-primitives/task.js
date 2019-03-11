@@ -15,25 +15,20 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   // количество месяцев 
   let dateOfEnd = new Date(date).getFullYear();
   let n = (dateOfEnd - new Date().getFullYear()) * 12;
-  console.log(n);
 
   //сумма, которую необходимо вернуть банку
   let refundSum = parseFloat(amount) - parseFloat(contribution);
-    console.log(refundSum);
-
+ 
   //процентная ставка
   let interestRate = parseFloat(percent) / 100;
-  console.log(interestRate);
   
   //Ежемесячная оплата 
   let p = interestRate * (1 / 12);
   let monthlyFee = refundSum * (p + p / (Math.pow((1 + p), n) - 1));
-  console.log(monthlyFee);
 
   //сумма процентов за пользование кредитом
   let creditPercent = (monthlyFee * n) - refundSum;
-  console.log(creditPercent);
-
+  
   //общая сумма, которую придется заплатить клиенту
   let totalAmount = parseFloat(contribution) + refundSum + creditPercent;
   return totalAmount.toFixed(2);
@@ -47,6 +42,8 @@ function sayHello() {
 }
 
 function getGreeting(name) {
-    // код для задачи №2 писать здесь
-    //return greeting;
-}
+  let greeting = (name != 0) ? `Привет, мир! Меня зовут ${name}` : `Привет, мир! Меня зовут Аноним`;
+
+  console.log(greeting);
+  return greeting;
+};
