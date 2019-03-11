@@ -7,8 +7,13 @@ function initCheckBirthday() {
 }
 
 function checkBirthday(birthday) {
-    // код для задачи №1 писать здесь
-}
+  let now = +new Date();
+  let oneMoreDate = +new Date(birthday);
+  let diff = now - oneMoreDate;
+  let oneYearMs = 31556926 * 1000;
+  let age = diff / oneYearMs;
+  return ((age > 18) ? 1 : 0);
+};
 
 function initPrintAnimalSound() {
     const animal = {
