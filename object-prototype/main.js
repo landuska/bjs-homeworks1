@@ -26,8 +26,9 @@ function initPrintAnimalSound() {
 }
 
 function getAnimalSound(animal) {
-    // код для задачи №2 писать здесь
-}
+  let sound = Object.assign({}, animal);
+  return ((animal === undefined) ? null : sound.sound);
+};
 
 function initCalculateStatement() {
     for (let idx = 0; idx < 3; idx++) {
