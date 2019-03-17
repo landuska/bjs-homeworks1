@@ -83,19 +83,97 @@ console.log(log.getGrades());
 
 
 // RPG ИГРА
-
-class Player {
-    constractor(life, mana, speed, attack, agility, luck){
-        this.life = life;
-        this.mana = mana;
-        this.speed = speed;
+class Weapon {
+    constructor(name, attack, durability, range){
+        this.name = name;
         this.attack = attack;
-        this.agility = agility;
-        this.luck = luck;
+        this.durability = durability;
+        this.range = range;
+        this.startDurability = this.durability;
+    };
+
+    takeDamage(damage){
+        if ((this.durability -= damage) > 0){
+                return this.durability;
+            }else{
+                return this.durability = 0;
+            };   
+    };    
+
+    getDamage(){
+        if (this.durability >= (this.startDurability*0,3)){
+            return this.attack;
+        } else if ((this.durability < (this.startDurability*0,3)) && (this.durability > 0)){
+            return this.attack /= 2;
+        } else {
+            return 0;
+        };
+    };
+
+    isBroken(){
+        return (this.durability > 0)
     };
 };
 
+class Arm extends Weapon {
+};
 
+class Bow extends Weapon{
+};
 
+class Sword extends Weapon{
+};
+  
+class Knife extends Weapon{
+};
 
+class Staff extends Weapon{
+};
 
+class LongBow extends Bow{
+    constructor(name, attack, durability, range){
+        super(name, attack, durability, range);
+    };
+};
+
+class Axe extends Sword{
+    constructor(name, attack, durability, range){
+        super(name, attack, durability, range);
+    };
+};
+
+class StormStaff extends Staff{
+    constructor(name, attack, durability, range){
+        super(name, attack, durability, range);
+    };
+};
+
+const weapon = new Weapon('Старый меч', 20, 10, 1);
+weapon.takeDamage(5);
+console.log(weapon.durability);
+weapon.takeDamage(50);
+console.log(weapon.durability);
+
+const arm = new Arm('Рука', 1, Infinity, 1);
+arm.takeDamage(20);
+console.log(arm.durability);
+
+const bow = new Bow('Лук', 10, 200, 3);
+console.log(bow.getDamage(), bow.durability);
+bow.takeDamage(100);
+console.log(bow.getDamage(), bow.durability);
+bow.takeDamage(50);
+console.log(bow.getDamage(), bow.durability);
+bow.takeDamage(150);
+console.log(bow.getDamage(), bow.durability);
+
+const sword = new Sword('Меч', 25, 500, 1);
+sword.takeDamage(20);
+sword.takeDamage(100);
+console.log(sword.durability);
+
+const knife = new Knife('Нож', 5, 300, 1);
+const staff = new Staff('Посох', 8, 300, 2);
+const longbow = new LongBow('Длинный лук', 15, 4);
+const axe = new Axe('Секира', 27, 800);
+const stormStaff = new StormStaff('Посох Бури', 10, 3);
