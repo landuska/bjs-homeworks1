@@ -19,7 +19,7 @@ class StudentLog {
         } else {
             console.log(`Ошибка. Проверьте корректность ввода оценки по предмету ${subject}`);
         };
-        return console.log(`Количество оценок по ${subject} :` + this.subjects[subject].length);
+        return this.subjects[subject].length;
     };
 
     getAverageBySubject(subject){
@@ -34,19 +34,19 @@ class StudentLog {
                average = sum / this.subjects[subject].length;
         } else {
             average = 0;
-        }  
+        }; 
         return average;   
     };
 
     getTotalAverage(){
         let allMarksSum = 0, result = 0, i = 0;
-        if (this.subjects){
-            allMarksSum += this.getAverageBySubject; 
+        for (this.subject in this.subjects){
+            allMarksSum += this.getAverageBySubject(this.subject); 
             i ++;
         };
         //средний балл за ВСЕ предметы
         result = allMarksSum / i;
-        return (console.log(`Средняя оценка по всем предметам = ${result}`));    
+        return result;    
     };
 
     getGradesBySubject(subject){
@@ -54,7 +54,7 @@ class StudentLog {
     };
 
     getGrades(){
-        return (this.subjects.length === 0) ? (this.subjects = {}) : this.subjects;
+        return (Object.keys(this.subjects).length === 0) ? (this.subjects = {}) : this.subjects;
     };
 
 };
