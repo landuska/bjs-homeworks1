@@ -9,42 +9,44 @@ class StudentLog {
     };
 
     addGrade(grade, subject) {
-
-        if (subject in this.subjects){
-            //добавляем оценку к предмету, который уже существует
-            ((grade > 0) && (grade <= 5)) ? this.subjects[subject].push(grade) : console.log(`Ошибка. Проверьте корректность ввода оценки по предмету ${subject}`);
+        //проверяем наличие предмета
+        if (this.subjects[subject] === undefined){
+            this.subjects[subject] = [];
+        };      
+        //добавляем оценку к предмету, который уже существует
+        if ((grade > 0) && (grade <= 5)){
+            this.subjects[subject].push(grade); 
         } else {
-            //добавляем оценку к новому предмету
-            ((grade > 0) && (grade <= 5)) ? this.subjects[subject] = [grade] : console.log(`Ошибка. Проверьте корректность ввода оценки по предмету ${subject}`);
+            console.log(`Ошибка. Проверьте корректность ввода оценки по предмету ${subject}`);
         };
-        return this.subjects[subject];
+        return console.log(`Количество оценок по ${subject} :` + this.subjects[subject].length);
     };
 
     getAverageBySubject(subject){
-        let sum = 0;
+        let sum = 0; let average = 0;
         
-        if (subject in this.subjects){
+        if (this.subjects[subject].length !== 0){
             for (let i = 0; i < this.subjects[subject].length; i ++){
                 //суммируем оценки по одному предмету
                 sum += this.subjects[subject][i];  
-                };
+            };
                 // выводим среднее значение оценки
-               return sum / this.subjects[subject].length;
+               average = sum / this.subjects[subject].length;
         } else {
-            return 0;
-        };       
+            average = 0;
+        }  
+        return average;   
     };
 
     getTotalAverage(){
-        let allMarksSum = 0;
-        if (this.subjects !== undefined){
-            allMarksSum += getAverageBySubject(subject); 
+        let allMarksSum = 0, result = 0, i = 0;
+        if (this.subjects){
+            allMarksSum += this.getAverageBySubject; 
             i ++;
-        } else {
-            return 0;
         };
         //средний балл за ВСЕ предметы
-        return allMarksSum / i;    
+        result = allMarksSum / i;
+        return (console.log(`Средняя оценка по всем предметам = ${result}`));    
     };
 
     getGradesBySubject(subject){
@@ -52,7 +54,7 @@ class StudentLog {
     };
 
     getGrades(){
-        return (this.subjects === undefined) ? (this.subjects = {}) : this.subjects;
+        return (this.subjects.length === 0) ? (this.subjects = {}) : this.subjects;
     };
 
 };
@@ -78,7 +80,6 @@ console.log(log.getGradesBySubject('geometry'));
 console.log(log.getGradesBySubject('math'));
 
 console.log(log.getGrades());
-
 
 
 // RPG ИГРА
