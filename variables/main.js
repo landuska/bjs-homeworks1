@@ -39,50 +39,30 @@ class StudentLog {
     };
 
     getTotalAverage(){
-        let allMarksSum = 0, result = 0, i = 0;
+        let allMarksSum = 0, result = 0;
         for (this.subject in this.subjects){
             allMarksSum += this.getAverageBySubject(this.subject); 
-            i ++;
         };
         //средний балл за ВСЕ предметы
-        result = allMarksSum / i;
+        result = allMarksSum / Object.keys(this.subjects).length;
         return result;    
     };
 
     getGradesBySubject(subject){
-        return (this.subjects[subject] === undefined) ? (this.subjects[subject] = []) : this.subjects[subject];
+        return this.subjects[subject] || [];
     };
 
     getGrades(){
-        return (Object.keys(this.subjects).length === 0) ? (this.subjects = {}) : this.subjects;
+        return this.subjects || {};
     };
 
 };
 
 let log = new StudentLog ('Ландыш Хусаенова');
 
-console.log(log.getName());
-
-console.log(log.addGrade(2, 'algebra'));
-console.log(log.addGrade('отлично', 'math'));
-console.log(log.addGrade(4, 'algebra'));
-console.log(log.addGrade(5, 'geometry'));
-console.log(log.addGrade(4, 'geometry'));
-
-console.log(log.getAverageBySubject('algebra'));
-console.log(log.getAverageBySubject('geometry'));
-console.log(log.getAverageBySubject('math'));
-
-console.log(log.getTotalAverage());
-
-console.log(log.getGradesBySubject('algebra'));
-console.log(log.getGradesBySubject('geometry'));
-console.log(log.getGradesBySubject('math'));
-
-console.log(log.getGrades());
-
-
 // RPG ИГРА
+//ОРУЖИЕ
+
 class Weapon {
     constructor(name, attack, durability, range){
         this.name = name;
@@ -93,87 +73,270 @@ class Weapon {
     };
 
     takeDamage(damage){
-        if ((this.durability -= damage) > 0){
-                return this.durability;
-            }else{
-                return this.durability = 0;
-            };   
+        if ((this.durability = this.durability - damage) >= 0){
+            return this.durability;
+        }else{    
+            return this.durability = 0;
+        };    
     };    
 
     getDamage(){
-        if (this.durability >= (this.startDurability*0,3)){
+        if (this.durability >= (this.startDurability * 0.3)){
             return this.attack;
-        } else if ((this.durability < (this.startDurability*0,3)) && (this.durability > 0)){
-            return this.attack /= 2;
+        } else if ((this.durability < (this.startDurability * 0.3)) && (this.isBroken())){
+            return this.attack = this.attack / 2;
         } else {
             return 0;
         };
     };
 
     isBroken(){
-        return (this.durability > 0)
+        return (this.durability > 0);
     };
 };
 
 class Arm extends Weapon {
+    constructor(){
+        super('Рука', 1, Infinity, 1);
+    };
 };
 
 class Bow extends Weapon{
+    constructor(){
+        super('Лук', 10, 200, 3);
+    };
 };
 
 class Sword extends Weapon{
+    constructor(){
+        super('Меч', 25, 500, 1);
+    };
 };
   
 class Knife extends Weapon{
+    constructor(){
+        super('Нож', 5, 300, 1);
+    };
 };
 
 class Staff extends Weapon{
+    constructor(){
+        super('Посох', 8, 300, 2);
+    };
 };
 
 class LongBow extends Bow{
-    constructor(name, attack, durability, range){
-        super(name, attack, durability, range);
+    constructor(){
+        super();
+        this.name = 'Длинный лук';
+        this.attack = 15;
+        this.range = 4;
     };
 };
 
 class Axe extends Sword{
-    constructor(name, attack, durability, range){
-        super(name, attack, durability, range);
+    constructor(){
+        super();
+        this.name = 'Секира';
+        this.attack = 27;
+        this.durability = 800;
+        this.startDurability = this.durability;
     };
 };
 
 class StormStaff extends Staff{
-    constructor(name, attack, durability, range){
-        super(name, attack, durability, range);
+    constructor(){
+        super();
+        this.name = 'Посох Бури';
+        this.attack = 10;
+        this.range = 3;
     };
 };
 
 const weapon = new Weapon('Старый меч', 20, 10, 1);
-weapon.takeDamage(5);
-console.log(weapon.durability);
-weapon.takeDamage(50);
-console.log(weapon.durability);
+const arm = new Arm();
+const sword = new Sword();
+const bow = new Bow();
+const knife = new Knife();
+const staff = new Staff();
+const longbow = new LongBow();
+const axe = new Axe();
+const stormStaff = new StormStaff();
 
-const arm = new Arm('Рука', 1, Infinity, 1);
-arm.takeDamage(20);
-console.log(arm.durability);
 
-const bow = new Bow('Лук', 10, 200, 3);
-console.log(bow.getDamage(), bow.durability);
-bow.takeDamage(100);
-console.log(bow.getDamage(), bow.durability);
-bow.takeDamage(50);
-console.log(bow.getDamage(), bow.durability);
-bow.takeDamage(150);
-console.log(bow.getDamage(), bow.durability);
+//ИГРОКИ
 
-const sword = new Sword('Меч', 25, 500, 1);
-sword.takeDamage(20);
-sword.takeDamage(100);
-console.log(sword.durability);
+class Player {
+    constructor(name){
+        this.life = 100;
+        this.magic = 50;
+        this.speed = 1;
+        this.attack = 10;
+        this.agility= 5;
+        this.luck = 10;
+        this.description = 'Игрок';
+        this.weapon = new Weapon;
+        this.name = name;
+    };
 
-const knife = new Knife('Нож', 5, 300, 1);
-const staff = new Staff('Посох', 8, 300, 2);
-const longbow = new LongBow('Длинный лук', 15, 4);
-const axe = new Axe('Секира', 27, 800);
-const stormStaff = new StormStaff('Посох Бури', 10, 3);
+    getLuck(){
+        let randomNumber = Math.random() * 100;
+            return (randomNumber + this.luck) / 100;
+    };
+
+    getDamage(distance){
+        let weaponDamage = weapon.getDamage();
+        if (distance <= weapon.range){
+            return (((this.attack + weaponDamage) * this.getLuck()) / distance);
+        }else{
+            return 0;
+        }; 
+    };     
+
+    takeDamage(damage){
+        if ((this.life = this.life - damage) > 0){
+            return this.life;
+        }else{
+            return this.life = 0;
+        };   
+    }; 
+
+    isDead(){
+        return (this.life === 0);
+    };
+
+};
+
+class Warrior extends Player {
+    constructor(){
+        super();
+        this.life = 120;
+        this.startLife = this.life;
+        this.speed = 2;
+        this.attack = 10;
+        this.description = 'Воин';
+        this.weapon = new Sword;
+    };
+
+    takeDamage(damage){
+        if (((this.life = this.life - damage) > (this.startLife / 2)) || (this.magic === 0)){
+            this.life = this.life - damage;
+        }else if ((this.life < (this.startLife / 2)) && (this.getLuck() > 0.8)){
+            this.magic = this.magic - damage;
+        }; 
+        return (this.life > 0) ? this.life : this.life = 0;
+     };    
+};
+
+class Archer extends Player {
+    constructor(){
+        super();
+        this.life = 80;
+        this.magic = 35;
+        this.attack = 5;
+        this.agility = 10;
+        this.description = 'Лучник';
+        this.weapon = new Bow;
+    };
+
+    getDamage(distance){
+        let weaponDamage = weapon.getDamage();
+        if (distance <= weapon.range){
+            return (((this.attack + weaponDamage) * this.getLuck() * distance) / weapon.range);
+        }else{
+            return 0;
+        }; 
+    };  
+};
+
+class Mage extends Player {
+    constructor(){
+        super();
+        this.life = 70;
+        this.magic = 100;
+        this.startMagic = this.magic;
+        this.attack = 5;
+        this.agility = 8;
+        this.description = 'Маг';
+        this.weapon = new Staff;
+    };
+
+    takeDamage(damage){
+        if (this.magic > (this.startMagic * 0.5)){
+            this.life = (this.life - (damage / 1.5));
+            this.magic = this.magic - 12;
+        }else{    
+            this.life = (this.life - damage);
+        };
+        return (this.life > 0) ? this.life : this.life = 0;    
+    };     
+};
+
+class Dwarf extends Warrior {
+    constructor(){
+        super();
+        this.life = 130;
+        this.attack = 15;
+        this.luck = 20;
+        this.description = 'Гном';
+        this.weapon = new Axe;
+    };
+
+    takeDamage(damage){
+        if (this.getLuck() > 0.5){
+            this.life = this.life - (damage / 2);
+        }else{
+            this.life = this.life - damage;
+        };
+        return (this.life > 0) ? this.life : this.life = 0;  
+    }; 
+};
+
+class Crossbowman extends Archer {
+    constructor(){
+        super();
+        this.life = 85;
+        this.attack = 8;
+        this.agility = 20;
+        this.luck = 15;
+        this.description = 'Арбалетчик';
+        this.weapon = new LongBow;
+    };
+};
+
+class Demiurge extends Mage {
+    constructor(){
+        super();
+        this.life = 80;
+        this.magic = 120;
+        this.attack = 6;
+        this.luck = 12;
+        this.description = 'Демиург';
+        this.weapon = new StormStaff;
+    };
+    
+    getDamage(distance){
+        let weaponDamage = weapon.getDamage();
+        if (distance <= weapon.range){
+            if ((this.magic > 0) && (this.getLuck() > 0.6)){
+                return ((this.attack + (weaponDamage  * 1.5)) * this.getLuck()) / distance;
+            }else{
+                return ((this.attack + weaponDamage) * this.getLuck()) / distance;
+            };
+        }else{
+            return 0;
+        }; 
+    };     
+};
+
+
+const player = new Player ('Иван Демидов');
+const warrior = new Warrior();
+const archer = new Archer();
+const mage = new Mage();
+const dwarf = new Dwarf();
+const crossbowman = new Crossbowman();
+const demiurge = new Demiurge();
+
+console.log(dwarf.takeDamage(100));
+console.log(dwarf.takeDamage(100));
