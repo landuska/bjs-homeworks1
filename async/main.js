@@ -1,15 +1,24 @@
 function setDailyRhythm(wakeUpTime, bedTime){
-    if (new Date().getUTCHours() == wakeUpTime){
-        return (console.log(`Доброе утро, Вася!`));
-    } else if (new Date().getUTCHours() == bedTime){
-        return (console.log(`Спокойной ночи, Вася!`));
-    } else{
-        console.log('ошибка')
-    }
-};    
+    checkTimeMorning(wakeUpTime);
+    checkTimeNight(bedTime);
+};
 
-const setAlarm = (time, setDailyRhythm) => setDailyRhythm(time);
+const morning = () => console.log('Доброе утро, Вася!');
+const night = () => console.log('Спокойной ночи, Вася!');
 
-console.log(new Date().getUTCHours(), new Date().getUTCMinutes())
+function setAlarm(time, callback){
+    function result(sistemTime){
+        sistemTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+        if (sistemTime === time){
+            callback();
+        };
+    };
+    return result;
+};
 
-setTimeout(setDailyRhythm, 1000);
+const checkTimeMorning = setAlarm('07:00', morning);
+const checkTimeNight = setAlarm('23:00', night);
+
+console.log(`${new Date().getHours()}:${new Date().getMinutes()}`);
+
+setInterval(setDailyRhythm, 1000);
