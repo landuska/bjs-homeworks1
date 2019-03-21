@@ -73,7 +73,8 @@ class Weapon {
     };
 
     takeDamage(damage){
-        if ((this.durability = this.durability - damage) >= 0){
+        this.durability = this.durability - damage;
+        if (this.durability > 0){
             return this.durability;
         }else{    
             return this.durability = 0;
@@ -91,7 +92,7 @@ class Weapon {
     };
 
     isBroken(){
-        return (this.durability > 0);
+        return (this.durability < 0);
     };
 };
 
@@ -170,13 +171,14 @@ class Player {
     constructor(name){
         this.life = 100;
         this.magic = 50;
-        this.speed = 1;
+        this.speed = 10;
         this.attack = 10;
         this.agility= 5;
         this.luck = 10;
         this.description = 'Игрок';
-        this.weapon = new Weapon;
+        this.weapon = new Weapon();
         this.name = name;
+        this.position = 0;
     };
 
     getLuck(){
@@ -194,7 +196,8 @@ class Player {
     };     
 
     takeDamage(damage){
-        if ((this.life = this.life - damage) > 0){
+        this.life = this.life - damage;
+        if (this.life > 0){
             return this.life;
         }else{
             return this.life = 0;
@@ -204,6 +207,72 @@ class Player {
     isDead(){
         return (this.life === 0);
     };
+
+    moveLeft(distance){
+        if (distance <= this.speed){
+            this.position = this.position - distance;
+            return this.position;
+        };
+    };
+
+    moveRight(distance){
+        if (distance <= this.speed){
+            this.position = this.position + distance;
+            return this.position;
+        };
+    };
+
+    move(distance){
+        if (distance < 0){
+            this.moveLeft(distance);
+        }else{
+            this.moveRight(distance);
+        };
+    };
+
+    isAttackBlocked(){
+        return (this.getLuck() > ((100 - this.luck) / 100));
+    };  
+    
+    dodged(){
+        return (this.getLuck() > ((100 - this.agility - (this.speed * 3)) / 100));
+    };
+
+    takeAttack(damage){
+        if (this.isAttackBlocked()){
+            return this.weapon.takeDamage(damage);
+        }else if(this.dodged()){
+            return 0;
+        }else{
+            return this.takeDamage(damage);
+        };
+    };
+
+    checkWeapon(){
+        if (this.weapon.isBroken()){
+            this.weapon = new Knife();
+        };
+        
+        if(this.weapon.isBroken()){   
+            this.weapon = new Arm();
+        };
+    };
+
+    tryAttack(enemy){
+        let distance = this.position - enemy.position;
+        let damage = enemy.getDamage(distance);
+        enemy.takeAttack(damage);
+        if (this.position === enemy.position){
+            enemy.moveRight(1);
+            enemy.takeAttack(damage * 2);
+        };
+    };
+
+   // chooseEnemy(players){
+   //     for (let i = 0; i < players.length; i ++){
+   //         ...
+   //     };
+   // };
 
 };
 
@@ -215,14 +284,16 @@ class Warrior extends Player {
         this.speed = 2;
         this.attack = 10;
         this.description = 'Воин';
-        this.weapon = new Sword;
+        this.weapon = new Sword();
+        this.position = 20;
     };
 
     takeDamage(damage){
-        if (((this.life = this.life - damage) > (this.startLife / 2)) || (this.magic === 0)){
-            this.life = this.life - damage;
+        this.life = this.life - damage;
+        if ((this.life > (this.startLife / 2)) || (this.magic === 0)){
+            return this.life;
         }else if ((this.life < (this.startLife / 2)) && (this.getLuck() > 0.8)){
-            this.magic = this.magic - damage;
+            return this.magic = this.magic - damage;
         }; 
         return (this.life > 0) ? this.life : this.life = 0;
      };    
@@ -236,7 +307,7 @@ class Archer extends Player {
         this.attack = 5;
         this.agility = 10;
         this.description = 'Лучник';
-        this.weapon = new Bow;
+        this.weapon = new Bow();
     };
 
     getDamage(distance){
@@ -258,7 +329,7 @@ class Mage extends Player {
         this.attack = 5;
         this.agility = 8;
         this.description = 'Маг';
-        this.weapon = new Staff;
+        this.weapon = new Staff();
     };
 
     takeDamage(damage){
@@ -266,7 +337,7 @@ class Mage extends Player {
             this.life = (this.life - (damage / 1.5));
             this.magic = this.magic - 12;
         }else{    
-            this.life = (this.life - damage);
+            this.life = this.life - damage;
         };
         return (this.life > 0) ? this.life : this.life = 0;    
     };     
@@ -279,11 +350,13 @@ class Dwarf extends Warrior {
         this.attack = 15;
         this.luck = 20;
         this.description = 'Гном';
-        this.weapon = new Axe;
+        this.weapon = new Axe();
+        this.hit = 0;
     };
 
     takeDamage(damage){
-        if (this.getLuck() > 0.5){
+        this.hit ++;
+        if ((this.getLuck() > 0.5) && ((this.hit % 6) === 0)){
             this.life = this.life - (damage / 2);
         }else{
             this.life = this.life - damage;
@@ -300,7 +373,7 @@ class Crossbowman extends Archer {
         this.agility = 20;
         this.luck = 15;
         this.description = 'Арбалетчик';
-        this.weapon = new LongBow;
+        this.weapon = new LongBow();
     };
 };
 
@@ -312,7 +385,7 @@ class Demiurge extends Mage {
         this.attack = 6;
         this.luck = 12;
         this.description = 'Демиург';
-        this.weapon = new StormStaff;
+        this.weapon = new StormStaff();
     };
     
     getDamage(distance){
@@ -337,6 +410,3 @@ const mage = new Mage();
 const dwarf = new Dwarf();
 const crossbowman = new Crossbowman();
 const demiurge = new Demiurge();
-
-console.log(dwarf.takeDamage(100));
-console.log(dwarf.takeDamage(100));
